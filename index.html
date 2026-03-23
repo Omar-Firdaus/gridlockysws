@@ -13,6 +13,16 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body class="launch-page">
+    <audio id="bg-music" loop preload="auto" aria-hidden="true">
+      <source src="assets/bg-music.mp3" type="audio/mpeg" />
+    </audio>
+    <iframe
+      id="app-frame"
+      class="app-frame"
+      src="about:blank"
+      title="GRIDLOCK Workshop"
+      hidden
+    ></iframe>
     <div
       class="comic-launch"
       id="comic-launch"
@@ -41,60 +51,36 @@
         <a class="start-btn" href="app.html">START</a>
       </div>
 
-      <div class="scroll-hint" aria-hidden="true">
-        <svg
-          class="scroll-hint__icon"
-          width="28"
-          height="34"
-          viewBox="0 0 28 34"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M3 9l11 11 11-11"
-            stroke="currentColor"
-            stroke-width="2.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M3 17l11 11 11-11"
-            stroke="currentColor"
-            stroke-width="2.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-      </div>
+      <p class="start-prompt" aria-hidden="true">Hit the button to start building!</p>
 
       <footer class="sound-footer">
         <p class="sound-text">
-          Immersive sound ahead. Use headphones for best effect
+          Awesome sounds ahead. Turn up your volume to hear!
         </p>
         <div class="sound-icon" aria-hidden="true">
-          <svg
+          <img
             class="headphone-badge"
-            viewBox="0 0 48 48"
+            src="assets/volume-icon.svg"
+            alt=""
             width="44"
             height="44"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.35"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path
-              d="M12 20h5.5l7.5-4.5v17l-7.5-4.5H12a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2z"
-            />
-            <path d="M28 22.5a6.5 6.5 0 0 1 0 9" />
-            <path d="M32.5 18.5a11.5 11.5 0 0 1 0 15" />
-          </svg>
+          />
         </div>
       </footer>
     </div>
     <script src="sounds-animations.js" defer></script>
     <script src="launch-transition.js" defer></script>
     <script src="cursor.js" defer></script>
+    <script>
+      (function () {
+        var bgMusic = document.getElementById("bg-music");
+        if (!bgMusic) return;
+        window.addEventListener("message", function (e) {
+          if (e.data && e.data.type === "gridlock-setMuted") {
+            bgMusic.muted = !!e.data.muted;
+          }
+        });
+      })();
+    </script>
   </body>
 </html>

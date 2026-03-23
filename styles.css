@@ -162,6 +162,20 @@ body:not(.app-body) .page > * {
   z-index: 1;
 }
 
+/* App iframe (full experience after START) */
+.app-frame {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  z-index: 100;
+  background: var(--bg);
+}
+.app-frame[hidden] {
+  display: none;
+}
+
 /* Title block: vertically centered in upper region */
 .main {
   position: relative;
@@ -273,6 +287,20 @@ a.logo {
   outline-offset: 4px;
 }
 
+.start-prompt {
+  margin: -0.5rem 0 1.1rem;
+  padding: 0.32rem 0.85rem;
+  font-family: "Montserrat", system-ui, sans-serif;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cream-muted);
+  border: 2px dashed rgba(250, 246, 236, 0.2);
+  border-radius: 999px;
+  opacity: 0.9;
+}
+
 /* —— Comic transition to workshop (launch page START) —— */
 html.comic-launch-on,
 html.comic-launch-on body {
@@ -365,6 +393,10 @@ html.comic-launch-on body {
 
 .comic-launch--active .comic-launch__rays {
   animation: comic-launch-spin 1.15s linear infinite;
+}
+/* Stop rays spinning during float/close-out */
+.comic-launch--active.comic-launch--lift .comic-launch__rays {
+  animation: none;
 }
 
 @keyframes comic-launch-spin {
@@ -1501,6 +1533,100 @@ a.project-tiers__btn {
   font-size: clamp(0.88rem, 2vw, 1rem);
   line-height: 1.5;
   color: var(--cream-muted);
+}
+
+.locomotion-tip {
+  position: fixed;
+  right: clamp(0.75rem, 2.5vw, 1.5rem);
+  bottom: clamp(1rem, 2.5vw, 1.6rem);
+  width: min(22rem, calc(100vw - 2rem));
+  padding: 0.95rem 1rem 1rem;
+  background-color: var(--cream);
+  background-image: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 5px,
+      rgba(6, 13, 24, 0.028) 5px,
+      rgba(6, 13, 24, 0.028) 6px
+    ),
+    radial-gradient(
+      circle,
+      rgba(6, 13, 24, 0.045) 0.55px,
+      transparent 0.6px
+    );
+  background-size: 100% 100%, 6px 6px;
+  background-position: 0 0, 3px 3px;
+  border: 3px solid var(--ink);
+  border-radius: 12px;
+  box-shadow: 6px 6px 0 0 var(--ink);
+  transform: translateX(calc(100% + 2rem));
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.45s cubic-bezier(0.22, 0.8, 0.22, 1), opacity 0.3s ease;
+  z-index: 1200;
+}
+
+.locomotion-tip.is-visible {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.locomotion-tip.is-closed {
+  display: none;
+}
+
+.locomotion-tip__close {
+  position: absolute;
+  right: 0.45rem;
+  top: 0.35rem;
+  width: 1.85rem;
+  height: 1.85rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: rgba(6, 13, 24, 0.06);
+  color: var(--ink);
+  font-family: "Fredoka", system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.locomotion-tip__kicker {
+  margin: 0 0 0.35rem;
+  font-family: "Montserrat", system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(6, 13, 24, 0.6);
+}
+
+.locomotion-tip__text {
+  margin: 0;
+  padding-right: 1.9rem;
+  font-family: "Montserrat", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+@media (max-width: 560px) {
+  .locomotion-tip {
+    width: min(20rem, calc(100vw - 1rem));
+    right: 0.5rem;
+    bottom: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .locomotion-tip {
+    transition: none;
+  }
 }
 
 .process-header {

@@ -22,7 +22,7 @@
 
         <div class="site-nav__brand">
           <h1 class="site-nav__title">
-            <a href="index.html" class="logo">GRIDLOCK</a>
+            <a href="index.html" class="logo" target="_top">GRIDLOCK</a>
           </h1>
           <p class="tagline" lang="ja">グリッドロック</p>
         </div>
@@ -154,14 +154,6 @@
               stroke-linecap="round"
               stroke-linejoin="round"
             />
-            <path
-              d="M10 10c6 14 18 18 30 8"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              opacity="0.45"
-            />
           </svg>
           <svg
             class="process-arrow__svg process-arrow__svg--down"
@@ -177,14 +169,6 @@
               stroke-width="3.5"
               stroke-linecap="round"
               stroke-linejoin="round"
-            />
-            <path
-              d="M10 12c14 6 18 18 8 30"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              opacity="0.45"
             />
           </svg>
         </div>
@@ -215,14 +199,6 @@
               stroke-linecap="round"
               stroke-linejoin="round"
             />
-            <path
-              d="M12 8c8 16 22 18 32 6"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              opacity="0.45"
-            />
           </svg>
           <svg
             class="process-arrow__svg process-arrow__svg--down"
@@ -238,14 +214,6 @@
               stroke-width="3.5"
               stroke-linecap="round"
               stroke-linejoin="round"
-            />
-            <path
-              d="M8 14c16 8 18 22 6 32"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              opacity="0.45"
             />
           </svg>
         </div>
@@ -293,15 +261,15 @@
               </div>
               <h3 class="project-tiers__name">Tier 1</h3>
               <p class="project-tiers__meta">
-                Beginner Mobility · 5–8 hrs
+                Beginner Level · 100 Tags
               </p>
               <ul class="project-tiers__list">
-                <li>Line-Following Robot</li>
-                <li>Obstacle Avoidance Car (Ultrasonic)</li>
-                <li>Bluetooth-Controlled RC Car</li>
-                <li>Basic 2WD Rover</li>
-                <li>Light-Seeking Robot</li>
-                <li>Mini Desk Rover (USB powered)</li>
+                <li>WiFi Rover w/ Camera</li>
+                <li>Maze Solver Bot</li>
+                <li>Tracked Tank Robot</li>
+                <li>Gesture-Controlled Car</li>
+                <li>GPS Waypoint Rover</li>
+                <li>Object-Following Robot</li>
               </ul>
               <a class="project-tiers__btn project-tiers__btn--popular" href="#content">Get started</a>
             </div>
@@ -317,15 +285,15 @@
               </div>
               <h3 class="project-tiers__name">Tier 2</h3>
               <p class="project-tiers__meta">
-                Intermediate Mobility · 8–16 hrs
+                Intermediate Level · 200 tags
               </p>
               <ul class="project-tiers__list">
-                <li>WiFi-Controlled Rover (Camera Feed)</li>
-                <li>Autonomous Maze-Solving Robot</li>
-                <li>Tracked Tank Robot</li>
-                <li>Gesture-Controlled Car (IMU-based)</li>
-                <li>GPS Waypoint Rover</li>
-                <li>Object-Following Robot (Computer Vision Lite)</li>
+                <li>Self-Balancing Bot</li>
+                <li>Quadruped Walker</li>
+                <li>SLAM Navigation Rover</li>
+                <li>Autonomous Delivery Bot</li>
+                <li>Swarm Robotics System</li>
+                <li>Mobile Arm Rover</li>
               </ul>
               <a class="project-tiers__btn" href="#content">Get started</a>
             </div>
@@ -341,15 +309,13 @@
               </div>
               <h3 class="project-tiers__name">Tier 3</h3>
               <p class="project-tiers__meta">
-                Advanced Locomotion · 17–33 hrs
+                Advanced Level · 400 tags
               </p>
               <ul class="project-tiers__list">
                 <li>Self-Balancing Two-Wheel Robot (Inverted Pendulum)</li>
                 <li>Quadruped Walking Robot (Servo-based)</li>
                 <li>SLAM Navigation Rover (LiDAR or Visual)</li>
-                <li>FPV Drone (Custom Flight Controller)</li>
                 <li>Autonomous Delivery Bot</li>
-                <li>Swarm Robotics System (Multi-agent coordination)</li>
                 <li>Robotic Arm on Mobile Base</li>
               </ul>
               <a class="project-tiers__btn" href="#content">Get started</a>
@@ -583,11 +549,27 @@
       </p>
     </footer>
 
+    <aside class="locomotion-tip" id="locomotion-tip" aria-label="Locomotion clarification">
+      <button
+        type="button"
+        class="locomotion-tip__close"
+        id="locomotion-tip-close"
+        aria-label="Close locomotion tip"
+      >
+        ×
+      </button>
+      <p class="locomotion-tip__kicker">Quick note</p>
+      <p class="locomotion-tip__text">
+        “Walk” means any kind of locomotion in GRIDLOCK, so driving, rolling, or actual walking all count.
+      </p>
+    </aside>
+
     <script>
       (function () {
         var btn = document.getElementById("sound-toggle");
         if (!btn) return;
         var label = btn.querySelector(".sound-pill__label");
+        var inFrame = window.parent !== window;
         btn.addEventListener("click", function () {
           var on = btn.getAttribute("aria-pressed") === "true";
           var next = !on;
@@ -597,6 +579,11 @@
             next ? "Sound on" : "Sound off"
           );
           if (label) label.textContent = next ? "Sound on" : "Sound off";
+          if (inFrame) {
+            try {
+              window.parent.postMessage({ type: "gridlock-setMuted", muted: !next }, "*");
+            } catch (ignore) {}
+          }
         });
       })();
       (function () {
@@ -666,6 +653,40 @@
 
         if (input) input.addEventListener("input", applyFilters);
         applyFilters();
+      })();
+      (function () {
+        var tip = document.getElementById("locomotion-tip");
+        var closeBtn = document.getElementById("locomotion-tip-close");
+        var tiersHeading = document.getElementById("project-tiers-heading");
+        if (!tip || !closeBtn) return;
+        var shown = false;
+
+        function showTip() {
+          if (shown) return;
+          shown = true;
+          tip.classList.add("is-visible");
+          window.removeEventListener("scroll", onScroll);
+        }
+
+        function onScroll() {
+          if (!tiersHeading) return;
+          var rect = tiersHeading.getBoundingClientRect();
+          if (rect.top <= window.innerHeight * 0.99) {
+            showTip();
+          }
+        }
+
+        if (tiersHeading) {
+          window.addEventListener("scroll", onScroll, { passive: true });
+          onScroll();
+        } else {
+          showTip();
+        }
+        closeBtn.addEventListener("click", function () {
+          tip.classList.remove("is-visible");
+          tip.classList.add("is-closed");
+          window.removeEventListener("scroll", onScroll);
+        });
       })();
     </script>
     <a href="https://hackclub.com/"
