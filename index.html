@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GRIDLOCK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Montserrat:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="launch-page">
+    <div
+      class="comic-launch"
+      id="comic-launch"
+      hidden
+      aria-hidden="true"
+      role="status"
+      aria-live="polite"
+      aria-label="Opening workshop"
+    >
+      <div class="comic-launch__burst" aria-hidden="true">
+        <div class="comic-launch__burst-stack">
+          <div class="comic-launch__rays"></div>
+          <div class="comic-launch__ring"></div>
+          <p class="comic-launch__word">始めましょう!</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="page">
+      <main class="main" aria-label="GRIDLOCK title">
+        <h1 class="logo">GRIDLOCK</h1>
+        <p class="tagline" lang="ja">グリッドロック</p>
+      </main>
+
+      <div class="actions">
+        <a class="start-btn" href="app.html">START</a>
+      </div>
+
+      <div class="scroll-hint" aria-hidden="true">
+        <svg
+          class="scroll-hint__icon"
+          width="28"
+          height="34"
+          viewBox="0 0 28 34"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M3 9l11 11 11-11"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M3 17l11 11 11-11"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
+
+      <footer class="sound-footer">
+        <p class="sound-text">
+          Immersive sound ahead. Use headphones for best effect
+        </p>
+        <div class="sound-icon" aria-hidden="true">
+          <svg
+            class="headphone-badge"
+            viewBox="0 0 48 48"
+            width="44"
+            height="44"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.35"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M12 20h5.5l7.5-4.5v17l-7.5-4.5H12a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2z"
+            />
+            <path d="M28 22.5a6.5 6.5 0 0 1 0 9" />
+            <path d="M32.5 18.5a11.5 11.5 0 0 1 0 15" />
+          </svg>
+        </div>
+      </footer>
+    </div>
+    <script src="sounds-animations.js" defer></script>
+    <script src="launch-transition.js" defer></script>
+    <script src="cursor.js" defer></script>
+  </body>
+</html>
